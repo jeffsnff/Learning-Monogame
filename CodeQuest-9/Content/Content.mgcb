@@ -13,13 +13,13 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin File.spritefont
+#begin MainFont.spritefont
 /importer:FontDescriptionImporter
-/processor:LocalizedFontProcessor
+/processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /processorParam:Version=3.8.5.0
-/build:File.spritefont;GameFont.spritefont
+/build:MainFont.spritefont
 
 #begin star.png
 /importer:TextureImporter
