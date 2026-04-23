@@ -42,12 +42,6 @@ public class Game1 : Game
         _spaceBackground = Content.Load<Texture2D>("starryBackground");
         _gameFont = Content.Load<SpriteFont>("MainFont");
         _starSprite = Content.Load<Texture2D>("star");
-        
-        for (int i = 0; i < 10; i++)
-        {
-            _stars.Add(new Star(_rng.Next(10,750),_rng.Next(-10,5),_starSprite));
-        }
-        
     }
 
     protected override void Update(GameTime gameTime)
@@ -87,7 +81,7 @@ public class Game1 : Game
         // Draw the background
         _spriteBatch.Begin();
         _spriteBatch.Draw(_spaceBackground, new Vector2(0,0), Color.White);
-        _spriteBatch.DrawString(_gameFont, $"Current Wave: {_currentWave}\nStars in List: {_stars.Count}", new Vector2(10,10), Color.White);
+        _spriteBatch.DrawString(_gameFont, $"Current Wave: {_currentWave}", new Vector2(10,10), Color.White);
         _spriteBatch.End();
         
         // Draw the stars
