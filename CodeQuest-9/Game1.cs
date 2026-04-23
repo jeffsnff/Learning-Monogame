@@ -15,6 +15,7 @@ public class Game1 : Game
     private Texture2D _starSprite;
     private List<Star> _stars;
     private int _currentWave;
+    private int _starCount;
     private Random _rng;
 
     public Game1()
@@ -29,6 +30,7 @@ public class Game1 : Game
         // TODO: Add your initialization logic here
         _rng = new Random();
         _currentWave = 0;
+        _starCount = 0;
         _stars = new List<Star>();
         
         base.Initialize();
@@ -64,7 +66,11 @@ public class Game1 : Game
         if (_stars.Count == 0)
         {
             _currentWave++;
-            for (int i = 0; i < _currentWave; i++)
+            if (_starCount < 10)
+            {
+                _starCount++;
+            }
+            for (int i = 0; i < _starCount; i++)
             {
                 _stars.Add(new Star(_rng.Next(10,750), _rng.Next(-10,5), _starSprite));
             }
