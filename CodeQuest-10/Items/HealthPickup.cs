@@ -23,7 +23,7 @@ namespace CodeQuest_10
         }
 
         //these are helpful when we want to tell Game1 or some other game object where 
-        //the health pick up is.
+        //the health pickup is.
         public float GetX() { return _healthPickupX; }
         public float GetY() { return _healthPickupY; }
 
@@ -35,10 +35,14 @@ namespace CodeQuest_10
         //Where is Update()? Like the coin, a health pickup just sits there (for now) looking healthy. We don't
         //need an Update() method since it doesn't really "do" anything else (yet).
 
+        public Rectangle GetBounds()
+        {
+            return new Rectangle((int)_healthPickupX, (int)_healthPickupY, _healthPickupSprite.Height,
+                _healthPickupSprite.Width);
+        }
 
 
-
-        //a draw method for our health pick up object
+        //a draw method for our health pickup object
         public void Draw(SpriteBatch spriteBatch)
         {
 

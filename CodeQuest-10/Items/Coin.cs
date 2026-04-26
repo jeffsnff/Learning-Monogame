@@ -34,6 +34,11 @@ namespace CodeQuest_10
         //Where is Update()? the coin just sits there looking shiny and valuable. We don't
         //need an Update() method since it doesn't really "do" anything else.
 
+        public Rectangle GetBounds()
+        {
+            return new Rectangle((int)_coinX, (int)_coinY, _coinSprite.Height, _coinSprite.Width);
+        }
+        
         //a draw method for our coin object
         public void Draw(SpriteBatch spriteBatch)
         {

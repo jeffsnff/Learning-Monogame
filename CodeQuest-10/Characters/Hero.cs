@@ -118,6 +118,11 @@ namespace CodeQuest_10
             _heroBlockDown = false;
         }
 
+        public Rectangle GetBounds()
+        {
+            return new Rectangle((int)_heroX, (int)_heroY, _heroSprite.Width, _heroSprite.Height);
+        }
+
 
         //A method to draw our hero in the scene
         public void Draw(SpriteBatch spriteBatch)

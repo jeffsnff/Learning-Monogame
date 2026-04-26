@@ -58,12 +58,35 @@ namespace CodeQuest_10
         {
             //get the current mouse state
             MouseState currentMouseState = Mouse.GetState();
-
-            //if we pressed the left button and the chest is closed, open it!
-            if (currentMouseState.LeftButton == ButtonState.Pressed && _isClosed)
+            Rectangle currentChestBounds = GetBounds();
+            
+            // Change the color of the chest if mouse is within the chest bounds
+            switch (currentChestBounds.Contains(currentMouseState.Position) && _isClosed)
             {
-                OpenChest();
+                case true:
+                    _chestColor = Color.Orange;
+                    break;
+                default:
+                    _chestColor = Color.White;
+                    break;
             }
+            //if mouse is in chest bounds
+            //  and the chest is closed
+            //  and left mouse button is pressed the left button,
+            //  open it!
+            switch (currentChestBounds.Contains(currentMouseState.Position) 
+                    && _isClosed 
+                    && currentMouseState.LeftButton == ButtonState.Pressed)
+            {
+                case true:
+                    OpenChest();
+                    break;
+            }
+        }
+
+        public Rectangle GetBounds()
+        {
+            return new Rectangle((int)_chestX, (int)(_chestY), _chestClosedSprite.Height, _chestClosedSprite.Width);
         }
 
         //a draw method for our chest object

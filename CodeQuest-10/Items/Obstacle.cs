@@ -22,6 +22,11 @@ namespace CodeQuest_10
         public float GetX() { return _obstacleX; }
         public float GetY() { return _obstacleY; }
 
+        public Rectangle GetBounds()
+        {
+            return new Rectangle((int)_obstacleX, (int)_obstacleY, _obstacleSprite.Height, _obstacleSprite.Width);
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
