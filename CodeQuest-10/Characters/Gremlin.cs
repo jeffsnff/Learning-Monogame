@@ -12,6 +12,7 @@ namespace CodeQuest_10
         private int _gremlinHealth;
         private float _gremlinX, _gremlinY, _gremlinSpeed;
         private Texture2D _gremlinSprite;
+        public bool _gremlinRight { get; set; }
 
 
         //a constructor to set the default attribute values
@@ -23,6 +24,7 @@ namespace CodeQuest_10
             _gremlinHealth = gremlinHealth;
             _gremlinSpeed = gremlinSpeed;
             _gremlinSprite = gremlinSprite;
+            _gremlinRight = false;
         }
 
         //accessor methods to retrieve attribute values
@@ -55,6 +57,16 @@ namespace CodeQuest_10
             _gremlinX += horizontalMovement * _gremlinSpeed;
             float verticalMovement = currentGamePadState.ThumbSticks.Left.Y;
             _gremlinY -= verticalMovement * _gremlinSpeed;
+            
+            //Move Grimlen automatically
+            if (_gremlinRight)
+            {
+                _gremlinX += _gremlinSpeed;
+            }
+            else
+            {
+                _gremlinX -= _gremlinSpeed;
+            }
 
         }
 
@@ -67,7 +79,15 @@ namespace CodeQuest_10
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-            spriteBatch.Draw(_gremlinSprite, new Vector2(_gremlinX, _gremlinY), Color.White);
+            if (_gremlinRight)
+            {
+                spriteBatch.Draw(_gremlinSprite, new Vector2(_gremlinX, _gremlinY), null, Color.White, 0f, new Vector2(0,0), 1f, SpriteEffects.FlipHorizontally, 1);
+            }
+            else
+            {
+                spriteBatch.Draw(_gremlinSprite, new Vector2(_gremlinX, _gremlinY), null, Color.White, 0f, new Vector2(0,0), 1f, SpriteEffects.None, 1);
+            }
+            // spriteBatch.Draw(_gremlinSprite, new Vector2(_gremlinX, _gremlinY), Color.White);
             spriteBatch.End();
         }
 

@@ -73,7 +73,7 @@ namespace CodeQuest_10
             _listOfHealthPickups.Add(new HealthPickup(100, 350, Content.Load<Texture2D>("healthVial")));
             _listOfHealthPickups.Add(new HealthPickup(600, 100, Content.Load<Texture2D>("healthVial")));
 
-            _listOfGremlins.Add(new Gremlin(600, 200, 10, 5, Content.Load<Texture2D>("gremlin")));
+            _listOfGremlins.Add(new Gremlin(600, 200, 10, 2, Content.Load<Texture2D>("gremlin")));
 
             _coinSprite = Content.Load<Texture2D>("coin");
 
@@ -148,6 +148,23 @@ namespace CodeQuest_10
                         {
                             tempHero.Block("up");
                         }
+                    }
+                }
+            }
+            
+            // Move grimlen
+            for (int i = 0; i < _listOfGremlins.Count; i++)
+            {
+                _listOfGremlins[i].Update();
+            }
+            // Prevent Grimlen from moving through Obstacale
+            for (int i = 0; i < _listOfObstacles.Count; i++)
+            {
+                for (int j = 0; j < _listOfGremlins.Count; j++)
+                {
+                    if (_listOfObstacles[i].GetBounds().Intersects(_listOfGremlins[j].GetBounds()))
+                    {
+                        _listOfGremlins[j]._gremlinRight = !_listOfGremlins[j]._gremlinRight;
                     }
                 }
             }
