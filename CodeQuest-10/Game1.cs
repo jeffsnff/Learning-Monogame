@@ -185,9 +185,31 @@ namespace CodeQuest_10
             // Get damage when colliding with grimlen
             for (int i = 0; i < _listOfGremlins.Count; i++)
             {
+                Gremlin tempGremlin = _listOfGremlins[i];
+                Hero tempHero = _listOfHeroes[0];
+                
                 if (_listOfGremlins[i].GetBounds().Intersects(_listOfHeroes[0].GetBounds()))
                 {
                     _listOfHeroes[0].TakeDamage(_listOfGremlins[i].DealDamage());
+                }
+
+                Vector2 tempHeroCenter = tempHero.GetCenterPoint();
+
+                if (tempGremlin.GetBounds().Contains(Vector2.Add(tempHeroCenter, new Vector2(35, 0))))
+                {
+                    tempHero.EscapeDamage("left");
+                }
+                if (tempGremlin.GetBounds().Contains(Vector2.Add(tempHeroCenter, new Vector2(-35, 0))))
+                {
+                    tempHero.EscapeDamage("right");
+                }
+                if (tempGremlin.GetBounds().Contains(Vector2.Add(tempHeroCenter, new Vector2(0, 35))))
+                {
+                    tempHero.EscapeDamage("up");
+                }
+                if (tempGremlin.GetBounds().Contains(Vector2.Add(tempHeroCenter, new Vector2(0, -35))))
+                {
+                    tempHero.EscapeDamage("down");
                 }
             }
 

@@ -9,11 +9,12 @@ namespace CodeQuest_10
     internal class Hero
     {
         //attribute variables to define the state of our hero
-        private int _heroHealth;
+        private int _heroHealth, _heroScale;
         private float _heroX, _heroY, _heroSpeed;
         private Texture2D _heroSprite;
 
         private bool _heroMovingRight;    //to flip the sprite when needed
+        private bool _spaceBarPressed;
 
         private bool _heroBlockLeft, _heroBlockRight, _heroBlockUp, _heroBlockDown;
 
@@ -28,7 +29,9 @@ namespace CodeQuest_10
             _heroHealth = heroHealth;
             _heroSpeed = heroSpeed;
             _heroSprite = heroSprite;
+            _heroScale = 1;
             _heroMovingRight = true;    //start out looking right
+            _spaceBarPressed = false;      // start out normal size
 
 
             _heroBlockLeft = false;
@@ -111,6 +114,16 @@ namespace CodeQuest_10
                 _heroY += _heroSpeed;
             }
 
+            if (!_spaceBarPressed && currentKeyboardState.IsKeyDown(Keys.Space))
+            {
+                _spaceBarPressed = true;
+                _heroScale = _heroScale == 1 ? 5 : 1;
+            }
+
+            if (!currentKeyboardState.IsKeyDown((Keys.Space)))
+            {
+                _spaceBarPressed = false;
+            }
 
             _heroBlockLeft = false;
             _heroBlockRight = false;
@@ -120,7 +133,7 @@ namespace CodeQuest_10
 
         public Rectangle GetBounds()
         {
-            return new Rectangle((int)_heroX, (int)_heroY, _heroSprite.Width, _heroSprite.Height);
+            return new Rectangle((int)_heroX + 10 * _heroScale, (int)_heroY + 10 * _heroScale, 40 * _heroScale, 50 * _heroScale);
         }
 
 
@@ -130,9 +143,9 @@ namespace CodeQuest_10
             spriteBatch.Begin();
             //using the 9-argument version so we can flip the hero based on the direction they are moving
             if (_heroMovingRight)
-                spriteBatch.Draw(_heroSprite, new Vector2(_heroX, _heroY), null, Color.White, 0, new Vector2(0, 0), 1, SpriteEffects.None, 0);
+                spriteBatch.Draw(_heroSprite, new Vector2(_heroX, _heroY), null, Color.White, 0, new Vector2(0, 0), _heroScale, SpriteEffects.None, 0);
             else
-                spriteBatch.Draw(_heroSprite, new Vector2(_heroX, _heroY), null, Color.White, 0, new Vector2(0, 0), 1, SpriteEffects.FlipHorizontally, 0);
+                spriteBatch.Draw(_heroSprite, new Vector2(_heroX, _heroY), null, Color.White, 0, new Vector2(0, 0), _heroScale, SpriteEffects.FlipHorizontally, 0);
             spriteBatch.End();
         }
 

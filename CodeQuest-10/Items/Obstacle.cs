@@ -24,7 +24,17 @@ namespace CodeQuest_10
 
         public Rectangle GetBounds()
         {
-            return new Rectangle((int)_obstacleX, (int)_obstacleY, _obstacleSprite.Height, _obstacleSprite.Width);
+            switch (_obstacleSprite.Name)
+            {
+                case "table":
+                    return new Rectangle((int)_obstacleX, (int)_obstacleY + 12, 64, 42);
+                case "console":
+                    return new Rectangle((int)_obstacleX + 15, (int)_obstacleY + 10, 35, 50);
+                case "crate":
+                    return new Rectangle((int)_obstacleX + 14, (int)_obstacleY + 15, 35, 35);
+                default:
+                    return new Rectangle((int)_obstacleX, (int)_obstacleY, _obstacleSprite.Height, _obstacleSprite.Width);
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)

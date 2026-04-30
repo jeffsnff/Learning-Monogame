@@ -86,7 +86,7 @@ namespace CodeQuest_10
 
         public Rectangle GetBounds()
         {
-            return new Rectangle((int)_chestX, (int)(_chestY), _chestClosedSprite.Height, _chestClosedSprite.Width);
+            return new Rectangle((int)_chestX + 16, (int)_chestY + 18, 32, 32);
         }
 
         //a draw method for our chest object
@@ -101,8 +101,6 @@ namespace CodeQuest_10
             spriteBatch.End();
 
         }
-
-
     }
 
 }

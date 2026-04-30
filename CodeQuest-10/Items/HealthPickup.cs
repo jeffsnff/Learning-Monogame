@@ -37,8 +37,7 @@ namespace CodeQuest_10
 
         public Rectangle GetBounds()
         {
-            return new Rectangle((int)_healthPickupX, (int)_healthPickupY, _healthPickupSprite.Height,
-                _healthPickupSprite.Width);
+            return new Rectangle((int)_healthPickupX + 20, (int)_healthPickupY + 15, 25, 35);
         }
 
 

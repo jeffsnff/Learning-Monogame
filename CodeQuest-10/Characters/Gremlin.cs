@@ -60,7 +60,7 @@ namespace CodeQuest_10
 
         public Rectangle GetBounds()
         {
-            return new Rectangle((int)_gremlinX, (int)_gremlinY, _gremlinSprite.Width, _gremlinSprite.Height);
+            return new Rectangle((int)_gremlinX + 5, (int)_gremlinY + 5, 55, 55);
         }
 
         //A method to draw our gremlin in the scene
