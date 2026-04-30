@@ -13,10 +13,13 @@ public class Game1 : Game
     private SpriteFont _gameFont;
     private Texture2D _spaceBackground;
     private Texture2D _starSprite;
-    private List<Star> _stars;
+    private List<Star> _starsList;
     private int _currentWave;
     private int _starCount;
+    private int _clickedStarCount;
     private Random _rng;
+    private Texture2D _boundingBoxTexture;
+    private bool _mouseClicked;
 
     public Game1()
     {
@@ -31,7 +34,11 @@ public class Game1 : Game
         _rng = new Random();
         _currentWave = 0;
         _starCount = 0;
-        _stars = new List<Star>();
+        _clickedStarCount = 0;
+        _mouseClicked = false;
+        _starsList = new List<Star>();
+        _boundingBoxTexture = new Texture2D(GraphicsDevice, 1, 1);
+        _boundingBoxTexture.SetData(new Color[] {Color.White});
         
         base.Initialize();
     }
@@ -54,16 +61,33 @@ public class Game1 : Game
 
         // TODO: Add your update logic here
 
-        for(int index = 0; index < _stars.Count; index++)
+        for(int index = 0; index < _starsList.Count; index++)
         {
-            _stars[index].Update();
-            if (_stars[index].GetY() > 700)
+            _starsList[index].Update();
+            if (_starsList[index].GetY() > 700)
             {
-                _stars.RemoveAt(index);
+                _starsList.RemoveAt(index);
+            }
+        }
+        
+        MouseState currentMouseState = Mouse.GetState();
+        for (int i = 0; i < _starsList.Count; i++)
+        {
+            if (!_mouseClicked && _starsList[i].GetBounds().Contains(currentMouseState.Position) && currentMouseState.LeftButton == ButtonState.Pressed)
+            {
+                _clickedStarCount++;
+                _mouseClicked = true;
+                _starsList.RemoveAt(i);
             }
         }
 
-        if (_stars.Count == 0)
+        // Prevents user from holding down mouse button to gather stars
+        if (currentMouseState.LeftButton != ButtonState.Pressed)
+        {
+            _mouseClicked = false;
+        }
+
+        if (_starsList.Count == 0)
         {
             _currentWave++;
             if (_starCount < 10)
@@ -72,9 +96,11 @@ public class Game1 : Game
             }
             for (int i = 0; i < _starCount; i++)
             {
-                _stars.Add(new Star(_rng.Next(10,750), _rng.Next(-10,5), _starSprite));
+                _starsList.Add(new Star(_rng.Next(10,750), _rng.Next(-10,5), _starSprite));
             }
         }
+        
+        
         base.Update(gameTime);
     }
 
@@ -88,10 +114,23 @@ public class Game1 : Game
         _spriteBatch.Begin();
         _spriteBatch.Draw(_spaceBackground, new Vector2(0,0), Color.White);
         _spriteBatch.DrawString(_gameFont, $"Current Wave: {_currentWave}", new Vector2(10,10), Color.White);
+        _spriteBatch.DrawString(_gameFont, $"Clicked Stars: {_clickedStarCount}", new Vector2(10,40), Color.White);
+        
+        // Show boundry boxes for stars
+        bool showBounds = false;
+        switch (showBounds)
+        {
+            case true:
+                foreach (Star star in _starsList)
+                {
+                    _spriteBatch.Draw(_boundingBoxTexture, star.GetBounds(), Color.White);
+                }
+                break;
+        }
         _spriteBatch.End();
         
         // Draw the stars
-        foreach (Star star in _stars)
+        foreach (Star star in _starsList)
         {
             star.Draw(_spriteBatch);
         }

@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 
 namespace CodeQuest_9
@@ -9,7 +10,7 @@ namespace CodeQuest_9
     {
 
         //attributes to make the stars work properly
-        private Texture2D _starTexture;
+        private Texture2D _starSprite;
         private float _starX, _starY, _starRotation, _starRotationChange;
         private bool _rotateClockwise;
         private Random _rng;
@@ -24,7 +25,7 @@ namespace CodeQuest_9
             //set all our argument values
             _starX = starX;
             _starY = starY;
-            _starTexture = starTexture;
+            _starSprite = starTexture;
 
             //we need this to make the stars all seem different
             _rng = new Random();
@@ -58,7 +59,7 @@ namespace CodeQuest_9
             _starTransparency = _rng.Next(30, 100) / 100f;
 
             //set our origin to the center of the star sprite so that the rotation looks good!
-            _starOrigin = new Vector2((_starTexture.Width / 2f), (_starTexture.Height / 2f));
+            _starOrigin = new Vector2((_starSprite.Width / 2f), (_starSprite.Height / 2f));
         }
 
         public float GetX() { return _starX; }
@@ -80,11 +81,15 @@ namespace CodeQuest_9
         {
             spriteBatch.Begin();
             //all the variables come together to draw our lovely stars
-            spriteBatch.Draw(_starTexture, new Vector2(_starX, _starY), null, _starColor * _starTransparency,
+            spriteBatch.Draw(_starSprite, new Vector2(_starX, _starY), null, _starColor * _starTransparency,
                 _starRotation, _starOrigin, _starScale, SpriteEffects.None, 0);
             spriteBatch.End();
         }
 
+        public Rectangle GetBounds()
+        {
+            return new Rectangle((int)_starX - 15, ((int)_starY - 15), (int)(_starSprite.Width * _starScale), (int)(_starSprite.Height * _starScale));
+        }
 
     }
 }
