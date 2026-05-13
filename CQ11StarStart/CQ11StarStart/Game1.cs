@@ -16,6 +16,7 @@ namespace CQ11StarStart
         private SpriteFont _gameFont;
         private Texture2D _spaceBackground;
         private Texture2D _starSprite;
+        private Texture2D _explosionSpriteSheet;
         private List<Star> _starList;
         private List<Explosion> _explosionList;
         private Random _rng;
@@ -56,6 +57,7 @@ namespace CQ11StarStart
             //load and assign our sprites and fonts
             _starSprite = Content.Load<Texture2D>("star");
             _spaceBackground = Content.Load<Texture2D>("spaceBackground");
+            _explosionSpriteSheet = Content.Load<Texture2D>("explosionSpritesheet");
             _gameFont = Content.Load<SpriteFont>("GameFont");
 
         }
@@ -87,7 +89,7 @@ namespace CQ11StarStart
                     if (_starList[i].GetBounds().Contains(currentMouseState.Position))
                     {
                         //does this seem like a good place to add an explosion?
-
+                        _explosionList.Add(new Explosion(currentMouseState.X, currentMouseState.Y, _explosionSpriteSheet));
 
 
                         _starList.RemoveAt(i);  //remove the star that was clicked
@@ -115,12 +117,19 @@ namespace CQ11StarStart
             }
 
             //update all our explosions (CQ11)
-
-
-     
-
+            for (int i = 0; i < _explosionList.Count; i++)
+            {
+                _explosionList[i].Update();
+            }
+            
             //remove any explosions that are finished (CQ11)
-
+            for (int i = _explosionList.Count - 1; i >= 0; i--)
+            {
+                if (_explosionList[i].isExplosionFinished())
+                {
+                    _explosionList.RemoveAt(i);
+                }
+            }
             
 
             base.Update(gameTime);
@@ -155,8 +164,11 @@ namespace CQ11StarStart
 
 
             //draw all our explosions (CQ11)
-     
 
+            for (int i = 0; i < _explosionList.Count; i++)
+            {
+                _explosionList[i].Draw(_spriteBatch);
+            }
 
 
 

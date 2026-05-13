@@ -27,10 +27,18 @@ namespace CQ11StarStart
         public void Update()
         {
             //Let's animate our explosion!
-
-
-
-
+            _animationTimer++;
+            if (_animationTimer >= 5)
+            {
+                
+                if (_animationIndex >= 9)
+                {
+                    _explosionFinished = true;
+                }
+                _animationIndex++;
+                _animationTimer = 0;
+            }
+            
         }
 
         //simple getter to see if the explosion is done
@@ -40,7 +48,7 @@ namespace CQ11StarStart
         {
             spriteBatch.Begin();
             //all the variables come together to draw our lovely explosion
-            spriteBatch.Draw(_explosionSpritesheet, new Vector2(_explosionX, _explosionY), new Rectangle(0, 0, 128, 128), Color.White, 0, new Vector2(64,64), 1, SpriteEffects.None, 0);
+            spriteBatch.Draw(_explosionSpritesheet, new Vector2(_explosionX, _explosionY), new Rectangle(_animationIndex * 128, 0, 128, 128), Color.White, 0, new Vector2(64,64), 1, SpriteEffects.None, 0);
             spriteBatch.End();
         }
     }
