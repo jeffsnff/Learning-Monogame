@@ -25,7 +25,7 @@ namespace CQ11SpaceStart
         private List<Coin> _listOfCoins;
 
         //we're going to pre-load the coin sprite to make it easier to create coins
-        private Texture2D _coinSprite;
+        private Texture2D _coinSpriteSheet;
 
         //lets track our hero's riches
         private int _heroCoinCount;
@@ -86,10 +86,10 @@ namespace CQ11SpaceStart
             _listOfHealthPickups.Add(new HealthPickup(600, 100, Content.Load<Texture2D>("healthVial")));
 
             //create a gremlin and add it to the list
-            _listOfGremlins.Add(new Gremlin(600, 200, 10, 2, Content.Load<Texture2D>("gremlin")));
+            _listOfGremlins.Add(new Gremlin(550, 160, 10, 2, Content.Load<Texture2D>("gremlinSpriteSheet")));
 
             //load and assign the coin sprite
-            _coinSprite = Content.Load<Texture2D>("coin");
+            _coinSpriteSheet = Content.Load<Texture2D>("coinSpriteSheet");
         }
 
         protected override void Update(GameTime gameTime)
@@ -109,10 +109,15 @@ namespace CQ11SpaceStart
                 if (!_listOfChests[i].IsClosed() && _listOfChests[i].HasCoin())
                 {
                     //a coin was found, add it to the list!
-                    _listOfCoins.Add(new Coin(_listOfChests[i].GetX(), _listOfChests[i].GetY() - 40, 1, _coinSprite));
+                    _listOfCoins.Add(new Coin(_listOfChests[i].GetX(), _listOfChests[i].GetY() - 40, 1, _coinSpriteSheet));
                     _listOfChests[i].RemoveCoin();
                 }
 
+            }
+            
+            for (int index = 0; index < _listOfCoins.Count; index++)
+            {
+                _listOfCoins[index].Update();
             }
 
             //check for collisions between the hero and obstacles
@@ -220,6 +225,7 @@ namespace CQ11SpaceStart
             _spriteBatch.Draw(_shipBGTexture, new Vector2(0, 0), Color.White);
             _spriteBatch.DrawString(_gameFont, "Hero Health: " + _listOfHeroes[0].GetHealth(), new Vector2(50, 430), Color.White);
             _spriteBatch.DrawString(_gameFont, "Coins Collected: " + _heroCoinCount, new Vector2(275, 430), Color.White);
+            _spriteBatch.DrawString(_gameFont, "Gremlin State: " + _listOfGremlins[0].GetGremlinState(), new Vector2(_listOfGremlins[0].GetX(), _listOfGremlins[0].GetY()-15), Color.White );
 
             //this code draws the hit boxes for all the objects in the scene
             bool showBounds = true;
